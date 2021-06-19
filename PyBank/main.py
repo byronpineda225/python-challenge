@@ -1,14 +1,33 @@
-# First we'll import the os module
-# This will allow us to create file paths across operating systems
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#   
+# Author: Byron Pineda
+#   
+#   A Python script was created for analyzing the financial records of a company.
+#   The budget data was analyzed for records to calculate some key metrics: 
+#       - The total number of months included in the dataset "budget_data.csv".
+#       - The net total amount of "Profit/Losses" over the entire period.
+#       - Calculate the changes in "Pfofit/Losses" over the entire period. Then
+#         calculate the average of those changes.    
+#       - The greatest increase in profits (date/amount) over the entire period.
+#       - The greatest decrease in profits (date/amount) over the entire period.
+#
+#   The script prints the analysis to the terminal and exports a text file with
+#   the results.
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# Module for Operating Systems
 import os
 
 # Module for reading CSV files
 import csv
 
-#csvpath = os.path.join('E:/python-challenge/PyBank/Resources/budget_data.csv')
+# Module for getting date/time
+from datetime import datetime
+now = datetime.now()
+
+# Define the path and data file to be used.
 csvpath = os.path.join("Resources","budget_data.csv")
 
-line_counter = []
 months_counter = 0
 net_total = 0
 prior_months_total = 0
@@ -44,7 +63,11 @@ with open(csvpath) as csvfile:
 
 # average_changes 
 average_changes = round(sum(net_changes)/months_counter,2)     
-          
+
+# Date and time format used mm/dd//YYYY H:M:S
+date_time_string = now.strftime("%m/%d/%Y %H:%M:%S")
+print("Date/Time", date_time_string)	
+print("")          
 print("Financial Analysis")
 print("----------------------------")
 print(f'Total Months: {months_counter}')
@@ -77,8 +100,10 @@ output_file = os.path.join("analysis","budget_final_analysis.txt")
 with open(output_file, "w") as datafile:
     writer = csv.writer(datafile)
 
-    # Write in zipped rows
-    # writer.writerows(cleaned_csv)
+# Write the results of the analysis to the text file "budget_final_analysis.txt"
+
+    datafile.write(f'Date/Time {date_time_string}\n')	
+    datafile.write("\n")    
     datafile.write("Financial Anaylsis\n") 
     datafile.write("----------------------------\n")
     datafile.write(f'Total Months: {months_counter}\n')

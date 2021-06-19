@@ -28,14 +28,29 @@ now = datetime.now()
 # Define the path and data file to be used.
 csvpath = os.path.join("Resources","budget_data.csv")
 
-months_counter = 0
+# Define the variables and lists. Initialize them as needed.
+
+# Contains the net total amount of "Profit/Losses" over the entire period
 net_total = 0
+
+# This contains the Profit/Losses difference between current 
+# and prior month.
+net_delta = 0
+
+# This is used to hold the Profit/Losses from the prior month.
 prior_months_total = 0
-current_months_total = 0
+
+# The next 2 lists hold the net changes and corresponding dates
+# over the entire period.
+
 net_changes = []
 monthly_changes = []
+
+# Holds the number of months in the data file used for analysis.
+months_counter = 0
+
+# Hold the average changes over the entire period.
 average_changes = 0.00
-net_delta = 0
 
 # Method 2: Improved Reading using CSV module
 
@@ -61,10 +76,13 @@ with open(csvpath) as csvfile:
         net_changes.append(net_delta)
         monthly_changes.append(row[0])
 
-# average_changes 
+# average changes over the entire period.
 average_changes = round(sum(net_changes)/months_counter,2)     
 
-# Date and time format used mm/dd//YYYY H:M:S
+# Print out key budget itmes to the terminal 
+# Set the Date and time format used mm/dd//YYYY H:M:S 
+# when the script was executed.
+
 date_time_string = now.strftime("%m/%d/%Y %H:%M:%S")
 print("Date/Time", date_time_string)	
 print("")          
@@ -74,20 +92,21 @@ print(f'Total Months: {months_counter}')
 print(f'Total: {net_total}')
 print(f'Average Change: {average_changes}')
 
-# Zip lists together
+# Zip lists together containing the net changes and date associated 
+# with the transaction.
+
 cleaned_csv = zip(net_changes, monthly_changes) 
 
-# Get the maximum net changes and its associated da
-xmax =  cleaned_csv
-
-xmax = list(max(xmax))
+# Get the maximum net changes and its associated date
+temp_max =  cleaned_csv
+xmax = list(max(temp_max))
 print(f'Greatest Increase in Profits: {xmax[1]} (${xmax[0]})') 
 
+# Get the Greatest Decrease in net changes and its associated date
 cleaned_csv = zip(net_changes, monthly_changes) 
 
-xmin = cleaned_csv
-
-xmin = list(min(xmin))
+temp_min = cleaned_csv
+xmin = list(min(temp_min))
 print(f'Greatest Decrease in Profits: {xmin[1]} (${xmin[0]})') 
 
 cleaned_csv = zip(net_changes, monthly_changes) 
@@ -111,10 +130,3 @@ with open(output_file, "w") as datafile:
     datafile.write(f'Average Change: {average_changes}\n')
     datafile.write(f'Greatest Increase in Profits: {xmax[1]} (${xmax[0]})\n')  
     datafile.write(f'Greatest Decrease in Profits: {xmin[1]} (${xmin[0]})\n') 
-
-
-
-
-
-
-

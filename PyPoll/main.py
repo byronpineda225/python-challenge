@@ -21,7 +21,6 @@ import os
 
 # Module for reading CSV files
 import csv
-from typing import TYPE_CHECKING
 
 # Define the path and data file to be used.
 csvpath = os.path.join("Resources","election_data.csv")

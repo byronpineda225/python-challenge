@@ -61,13 +61,41 @@ with open(csvpath) as csvfile:
             row[2] == 'O\'Tooley'
             candidates_votes_OTooley += 1
         
+
 candidates_votes_list = [candidate_votes_Khan,candidates_votes_Correy,
                         candidates_votes_Li,candidates_votes_OTooley]
 candidates_votes_percent = [candidate_votes_Khan/net_votes*100, candidates_votes_Correy/net_votes*100,
                            candidates_votes_Li/net_votes*100,candidates_votes_OTooley/net_votes*100]                         
 
 votes_for_each = candidates_name_list + candidates_votes_percent + candidates_votes_list  
-print(list(votes_for_each)) 
+
+
+# Set the winning votes tallied by default to the first 
+# vote in the list and once the maximum is obtained then
+# associate it with the candidates name list.  
+# The defaults variables are assigned below.
+
+the_winner_is = candidates_votes_list[0]
+the_winning_candidate_is = candidates_name_list[0]
+
+for i in candidates_votes_list:
+    if i > the_winner_is:
+        the_winner_is = candidates_votes_list[i]
+        the_winning_candidate_is = candidates_name_list[i]
+print("Winner:" + the_winning_candidate_is)            
+
+
+print("Election Results") 
+print("----------------------------")
+print(f'Total Votes: {net_votes}')
+print("----------------------------")
+print(f'{candidates_name_list[0]}: {candidates_votes_percent[0]:.3f}% ({candidates_votes_list[0]})')
+print(f'{candidates_name_list[1]}: {candidates_votes_percent[1]:.3f}% ({candidates_votes_list[1]})')
+print(f'{candidates_name_list[2]}: {candidates_votes_percent[2]:.3f}% ({candidates_votes_list[2]})')
+print(f'{candidates_name_list[3]}: {candidates_votes_percent[3]:.3f}% ({candidates_votes_list[3]})')
+print("----------------------------")
+print(f'Winner: {the_winning_candidate_is}') 
+print("----------------------------")
 
 # Set variable for output file
 
@@ -88,5 +116,6 @@ with open(output_file, "w") as datafile:
     datafile.write(f'{candidates_name_list[2]}: {candidates_votes_percent[2]:.3f}% ({candidates_votes_list[2]})\n')
     datafile.write(f'{candidates_name_list[3]}: {candidates_votes_percent[3]:.3f}% ({candidates_votes_list[3]})\n')
     datafile.write("----------------------------\n")
+    datafile.write(f'Winner: {the_winning_candidate_is}\n') 
     datafile.write("----------------------------\n")
 

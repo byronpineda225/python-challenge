@@ -82,9 +82,7 @@ for i in candidates_votes_list:
     if i > the_winner_is:
         the_winner_is = candidates_votes_list[i]
         the_winning_candidate_is = candidates_name_list[i]
-print("Winner:" + the_winning_candidate_is)            
-
-
+      
 print("Election Results") 
 print("----------------------------")
 print(f'Total Votes: {net_votes}')

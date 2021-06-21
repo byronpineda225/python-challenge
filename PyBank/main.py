@@ -1,6 +1,6 @@
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #   
-# Author: Byron Pineda
+# Author: Byron Pineda  Date: 6/21/2021
 #   
 #   A Python script was created for analyzing the financial records of a company.
 #   The budget data was analyzed for records to calculate some key metrics: 
@@ -79,6 +79,18 @@ with open(csvpath) as csvfile:
 # average changes over the entire period.
 average_changes = round(sum(net_changes)/months_counter,2)     
 
+# Obtain the maximum net changes in list, get its index, 
+# and use it to find the corresponding date in the date list.
+max_delta =  max(net_changes)
+idx_max = net_changes.index(max_delta)
+max_month = monthly_changes[idx_max]
+
+# Obtain the minimum net changes in list, get its index, 
+# and use it to find the corresponding date in the date list.
+min_delta =  min(net_changes)
+idx_min = net_changes.index(min_delta)
+min_month = monthly_changes[idx_min]
+
 # Print out key budget itmes to the terminal 
 # Set the Date and time format used mm/dd//YYYY H:M:S 
 # when the script was executed.
@@ -91,28 +103,10 @@ print("----------------------------")
 print(f'Total Months: {months_counter}')
 print(f'Total: {net_total}')
 print(f'Average Change: {average_changes}')
-
-# Zip lists together containing the net changes and date associated 
-# with the transaction.
-
-cleaned_csv = zip(net_changes, monthly_changes) 
-
-# Get the maximum net changes and its associated date
-temp_max =  cleaned_csv
-xmax = list(max(temp_max))
-print(f'Greatest Increase in Profits: {xmax[1]} (${xmax[0]})') 
-
-# Get the Greatest Decrease in net changes and its associated date
-cleaned_csv = zip(net_changes, monthly_changes) 
-
-temp_min = cleaned_csv
-xmin = list(min(temp_min))
-print(f'Greatest Decrease in Profits: {xmin[1]} (${xmin[0]})') 
-
-cleaned_csv = zip(net_changes, monthly_changes) 
+print(f'Greatest Increase in Profits: {max_month} (${max_delta})') 
+print(f'Greatest Decrease in Profits: {min_month} (${min_delta})') 
 
 # Set variable for output file
-
 output_file = os.path.join("analysis","budget_final_analysis.txt")
 
 #  Open the output file
@@ -128,5 +122,5 @@ with open(output_file, "w") as datafile:
     datafile.write(f'Total Months: {months_counter}\n')
     datafile.write(f'Total: {net_total}\n')
     datafile.write(f'Average Change: {average_changes}\n')
-    datafile.write(f'Greatest Increase in Profits: {xmax[1]} (${xmax[0]})\n')  
-    datafile.write(f'Greatest Decrease in Profits: {xmin[1]} (${xmin[0]})\n') 
+    datafile.write(f'Greatest Increase in Profits: {max_month} (${max_delta})\n')  
+    datafile.write(f'Greatest Decrease in Profits: {min_month} (${min_delta})\n') 

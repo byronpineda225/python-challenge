@@ -12,8 +12,8 @@
 #       - The total number of votes each candidate won.
 #       - The winner of the election based on popular vote.
 #
-#   The script prints the analysis to the terminal and exports a text file with
-#   the results.
+#   The script prints the analysis to the terminal and writes those results to a text 
+#   file named "election_analysis.txt" in the "anaylsis" directory with the results.
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # Module for Operating Systems
@@ -21,6 +21,10 @@ import os
 
 # Module for reading CSV files
 import csv
+
+# Module for getting date/time
+from datetime import datetime
+now = datetime.now()
 
 # Define the path and data file to be used.
 csvpath = os.path.join("Resources","election_data.csv")
@@ -66,13 +70,18 @@ candidates_votes_list = [candidate_votes_Khan,candidates_votes_Correy,
 candidates_votes_percent = [candidate_votes_Khan/net_votes*100, candidates_votes_Correy/net_votes*100,
                            candidates_votes_Li/net_votes*100,candidates_votes_OTooley/net_votes*100]                         
 
-votes_for_each = candidates_name_list + candidates_votes_percent + candidates_votes_list  
-
-
 # Set the winning votes tallied by default to the first 
 # vote in the list and once the maximum is obtained then
 # associate it with the candidates name list.  
 # The defaults variables are assigned below.
+#
+# Please note immediately below this for --> if section of
+# code I set up an alternative way of determining the winner
+# by using the max function on the list containing vote
+# tallies; getting its index; and associating it with the
+# list containing the candidates names.  However, I used
+# the for loop and if statement way just to practice
+# more Python coding.
 
 the_winner_is = candidates_votes_list[0]
 the_winning_candidate_is = candidates_name_list[0]
@@ -81,7 +90,25 @@ for i in candidates_votes_list:
     if i > the_winner_is:
         the_winner_is = candidates_votes_list[i]
         the_winning_candidate_is = candidates_name_list[i]
-      
+
+#===================================================
+# Alternatively you could find the winner
+# by finding the max in the list
+# candidates_votes_list; gets its index;
+# and use the index to get the position
+# of the corresponding list for the 
+# candidates in candidates_name_list as
+# seen below.
+#===================================================  
+#   max_votes = max(candidates_votes_list)  
+#   indx1 = candidates_votes_list.index(max_votes) 
+#   the_winner = candidates_name_list[indx1]
+#   print(f'The winner is: {the_winner}')
+#=================================================== 
+
+date_time_string = now.strftime("%m/%d/%Y %H:%M:%S")
+print("Date/Time", date_time_string)	
+print("")       
 print("Election Results") 
 print("----------------------------")
 print(f'Total Votes: {net_votes}')
@@ -102,8 +129,10 @@ output_file = os.path.join("analysis","election_analysis.txt")
 with open(output_file, "w") as datafile:
     writer = csv.writer(datafile)
 
-# Write the results of the analysis to the text file "election_analysis.txtt"
+# Write the results of the analysis to the text file "election_analysis.txt"
 
+    datafile.write(f'Date/Time {date_time_string}\n')	
+    datafile.write("\n")  
     datafile.write("Election Results\n") 
     datafile.write("----------------------------\n")
     datafile.write(f'Total Votes: {net_votes}\n')

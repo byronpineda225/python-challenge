@@ -13,6 +13,7 @@
 #
 #   The script prints the analysis to the terminal and exports a text file with
 #   the results.
+#
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # Module for Operating Systems
@@ -38,6 +39,7 @@ net_total = 0
 net_delta = 0
 
 # This is used to hold the Profit/Losses from the prior month.
+#prior_months_total = 0
 prior_months_total = 0
 
 # The next 2 lists hold the net changes and corresponding dates
@@ -52,7 +54,7 @@ months_counter = 0
 # Hold the average changes over the entire period.
 average_changes = 0.00
 
-# Method 2: Improved Reading using CSV module
+# Improved Reading using CSV module
 
 with open(csvpath) as csvfile:
      
@@ -69,13 +71,14 @@ with open(csvpath) as csvfile:
 
         # The net total amount of "Profit/Losses" over the entire period
         net_total += int(row[1]) 
-      
+  
         # Calculate the average change in Profits/Losses over the entire period
+        
         net_delta = int(row[1]) - prior_months_total
-        prior_months_total = int(row[1])
         net_changes.append(net_delta)
         monthly_changes.append(row[0])
-
+        prior_months_total = int(row[1])
+        
 # average changes over the entire period.
 average_changes = round(sum(net_changes)/months_counter,2)     
 

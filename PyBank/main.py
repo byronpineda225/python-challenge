@@ -73,11 +73,11 @@ with open(csvpath) as csvfile:
         net_total += int(row[1]) 
   
         # Calculate the average change in Profits/Losses over the entire period
-        
+
         net_delta = int(row[1]) - prior_months_total
         net_changes.append(net_delta)
         monthly_changes.append(row[0])
-        prior_months_total = int(row[1])
+        prior_months_total =int(row[1])
         
 # average changes over the entire period.
 average_changes = round(sum(net_changes)/months_counter,2)     

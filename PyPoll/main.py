@@ -29,16 +29,24 @@ now = datetime.now()
 # Define the path and data file to be used.
 csvpath = os.path.join("Resources","election_data.csv")
 
+# Get the total votes 
 net_votes = 0
-vote_count = 0
 
+# Set the list of candidates.
 candidates_name_list = ['Khan','Correy','Li','O\'Tooley']
+
+# The list containing the votes for each candidate.
 candidates_votes_list = []
-candidates_votes_percent = []
+
+# The variables containing the votes for each candidate.
 candidate_votes_Khan = 0
 candidates_votes_Correy = 0
 candidates_votes_Li = 0
 candidates_votes_OTooley = 0
+# The list containing the percentage of votes for each
+# candidate.  This list holds the votes acquired in the
+# variables directly above.
+candidates_votes_percent = []
 
 with open(csvpath) as csvfile:
      
@@ -53,7 +61,7 @@ with open(csvpath) as csvfile:
         # The net total amount of votes
         net_votes += 1 
 
-        vote_count += 1
+        # Tally the votes for each candidate based on name.
         if row[2] == 'Khan':
             candidate_votes_Khan += 1
         elif row[2] == 'Correy':    
@@ -64,6 +72,8 @@ with open(csvpath) as csvfile:
             row[2] == 'O\'Tooley'
             candidates_votes_OTooley += 1
         
+# Create new lists containing the votes tallied for each candidate
+# and the percentage of votes for each candidate.
 
 candidates_votes_list = [candidate_votes_Khan,candidates_votes_Correy,
                         candidates_votes_Li,candidates_votes_OTooley]
@@ -71,17 +81,8 @@ candidates_votes_percent = [candidate_votes_Khan/net_votes*100, candidates_votes
                            candidates_votes_Li/net_votes*100,candidates_votes_OTooley/net_votes*100]                         
 
 # Set the winning votes tallied by default to the first 
-# vote in the list and once the maximum is obtained then
-# associate it with the candidates name list.  
-# The defaults variables are assigned below.
-#
-# Please note immediately below this for --> if section of
-# code I set up an alternative way of determining the winner
-# by using the max function on the list containing vote
-# tallies; getting its index; and associating it with the
-# list containing the candidates names.  However, I used
-# the for loop and if statement way just to practice
-# more Python coding.
+# vote in the list and then loop. Once the maximum is obtained
+# associate it with the candidates name list. 
 
 the_winner_is = candidates_votes_list[0]
 the_winning_candidate_is = candidates_name_list[0]
@@ -91,20 +92,7 @@ for i in candidates_votes_list:
         the_winner_is = candidates_votes_list[i]
         the_winning_candidate_is = candidates_name_list[i]
 
-#===================================================
-# Alternatively you could find the winner
-# by finding the max in the list
-# candidates_votes_list; gets its index;
-# and use the index to get the position
-# of the corresponding list for the 
-# candidates in candidates_name_list as
-# seen below.
-#===================================================  
-#   max_votes = max(candidates_votes_list)  
-#   indx1 = candidates_votes_list.index(max_votes) 
-#   the_winner = candidates_name_list[indx1]
-#   print(f'The winner is: {the_winner}')
-#=================================================== 
+# Print out to the terminal.        
 
 date_time_string = now.strftime("%m/%d/%Y %H:%M:%S")
 print("Date/Time", date_time_string)	
